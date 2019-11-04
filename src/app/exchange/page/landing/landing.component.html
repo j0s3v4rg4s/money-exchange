@@ -1,0 +1,76 @@
+<div class="landing">
+  <div class="landing__header">
+    <img src="assets/img/logo.png" alt="" class="landing__header-logo" />
+    <div class="landing__header-menu">
+      <button mat-flat-button color="primary">Home</button>
+      <button mat-flat-button color="primary">Historic</button>
+      <button mat-flat-button color="primary">Exchanges</button>
+      <button mat-flat-button color="primary">Contact</button>
+    </div>
+  </div>
+
+  <div class="landing__convert">
+    <div class="landing__convert-data">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ currencyFrom.label }}</mat-label>
+        <input
+          id="currencyFrom"
+          matInput
+          [(ngModel)]="currencyFrom.value"
+          currencyMask
+          [options]="{
+            prefix: currencyFrom.symbol,
+            thousands: ',',
+            decimal: '.',
+            precision: 4
+          }"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ currencyTo.label }}</mat-label>
+        <input
+          id="currencyTo"
+          readonly
+          matInput
+          [(ngModel)]="currencyTo.value"
+          currencyMask
+          [options]="{
+            prefix: currencyTo.symbol,
+            thousands: ',',
+            decimal: '.',
+            precision: 4
+          }"
+        />
+      </mat-form-field>
+    </div>
+
+    <button
+      mat-raised-button
+      color="accent"
+      class="landing__convert-btn"
+      id="convert"
+      (click)="convert()"
+    >
+      Convert
+    </button>
+  </div>
+
+  <div class="landing__historic">
+    <div class="landing__historic-content">
+      <h2>Historical</h2>
+
+      <div *ngFor="let historical of historicalCurrency">
+        <h3>{{ historical.date }}</h3>
+        <div class="landing__historic-price">
+          <span *ngFor="let currency of historical.rates | keyvalue">
+            <span>{{currency.key}} </span>
+            {{ currency.value | currency: currency.key: 'symbol-narrow': '1.4-4'}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="landing__footer"></div>
+</div>
